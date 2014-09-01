@@ -1,0 +1,15 @@
+.container {
+  max-width:480px;
+  margin:20px auto;
+  padding:0 20px;
+}
+.menu {
+  max-width:480px;
+  margin:0 auto;
+  background:#ccc;
+  padding:10px 20px;
+}
+
+.search-form {
+  margin:20px 0;
+}
