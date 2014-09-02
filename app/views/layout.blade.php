@@ -10,10 +10,6 @@
 </head>
 <body>
 
-  <div class="menu">
-    <a href="{{URL::route('front')}}">WPPR Cards</a> @yield("title")
-  </div>
-
   <div class="container">
     @if(Session::get('success'))<div class="alert alert-success">{{ Session::get('success') }}</div>@endif
     @if(Session::get('error'))<div class="alert alert-danger">{{ Session::get('error') }}</div>@endif
