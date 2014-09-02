@@ -48,7 +48,35 @@ Log::useFiles(storage_path().'/logs/laravel.log');
 
 App::error(function(Exception $exception, $code)
 {
-	Log::error($exception);
+    Log::error($exception);
+
+    $trace = $exception->getTrace();
+
+    // Hacked together opbeat integration.
+    $ch = curl_init("https://opbeat.com/api/v1/organizations/{$_ENV['OPBEAT_ORG']}/apps/{$_ENV['OPBEAT_APP']}/errors/");
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+    curl_setopt($ch, CURLOPT_HEADER, false);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $payload = json_encode(array(
+      "message" => $exception->getMessage(),
+      "stacktrace" => array("trace" => $exception->getTraceAsString()),
+      "culprit" => $trace[0]['class']."@".$trace[0]['function'],
+
+    ));
+
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+      'Authorization: Bearer ' . $_ENV['OPBEAT_SECRET'],
+      "Content-type: application/json",
+      'User-Agent: SFPD/1.0'
+    ));
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+
+    curl_exec($ch);
+    curl_close($ch);
+
 });
 
 /*
