@@ -5,8 +5,8 @@
 @section("content")
 @include('header')
 
-<p>Search results for: <em>{{{$query}}}</em></p>
-<table class="table">
+<p>{{{count($players)}}} matches for <em>{{{$query}}}</em>. Click a name to view their wppr card.</p>
+<table class="table table-striped table-condensed">
   <thead>
     <tr>
       <th>Name</th>

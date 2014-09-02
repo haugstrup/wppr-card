@@ -9,7 +9,7 @@
   <div class="card__player-id">Player #{{{$player->player_id}}}</div>
   <ul class="card__tiles list-unstyled">
     <li class="card__tile">
-      <div class="card__tile-title">Rank</div>
+      <div class="card__tile-title">RANK</div>
       <div class="card__tile-fact">{{$info->player_stats->current_wppr_rank}}</div>
     </li>
     <li class="card__tile">
@@ -17,12 +17,12 @@
       <div class="card__tile-fact">{{{$info->player_stats->current_wppr_value}}}</div>
     </li>
     <li class="card__tile">
-      <div class="card__tile-title">Active Events</div>
+      <div class="card__tile-title">ACTIVE EVENTS</div>
       <div class="card__tile-fact">{{{$info->player_stats->total_active_events}}}</div>
     </li>
     @if ($info->championshipSeries)
     <li class="card__tile">
-      <div class="card__tile-title">{{{$info->championshipSeries[0]->group_name}}}</div>
+      <div class="card__tile-title">{{{strtoupper($info->championshipSeries[0]->group_name)}}}</div>
       <div class="card__tile-fact">{{$info->championshipSeries[0]->rank}}</div>
     </li>
     @endif

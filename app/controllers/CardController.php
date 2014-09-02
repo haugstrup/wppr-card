@@ -12,7 +12,8 @@ class CardController extends BaseController {
 
       // Get from cache or IFPA
       $info = $this->get_player_info($id);
-      if (!$info) {
+
+      if (!$info || !$info->player->player_id) {
         return View::make('home.ifpaerror');
       }
 
@@ -22,7 +23,7 @@ class CardController extends BaseController {
       $raw['player_id'] = (int)$raw['player_id'];
       $player = new Player($raw);
 
-      if (!Player::find($player->player_id)) {
+      if ($info && !Player::find($player->player_id)) {
         $player->url_label = null;
         $player->save();
       }
@@ -37,9 +38,15 @@ class CardController extends BaseController {
 
       // We always have to get full info
       $info = $this->get_player_info($player->player_id);
-      if (!$info) {
+
+      if (!$info || !$info->player->player_id) {
         return View::make('home.ifpaerror');
       }
+
+    }
+
+    if (!$info) {
+      return View::make('home.ifpaerror');
     }
 
     // Update local DB if player first or last name changed.

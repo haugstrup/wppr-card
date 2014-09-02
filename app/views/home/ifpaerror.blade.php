@@ -1,4 +1,5 @@
 @extends("layout")
 @section("content")
-Something went wrong with communicating with the IFPA database.
+@include('header')
+<p class="alert alert-danger">Ack! Something went wrong while communicating with the IFPA database.</p>
 @stop

@@ -76,7 +76,6 @@ p.small {
 .card__tile-title {
   font-weight:bold;
   font-size:0.8em;
-  text-transform: uppercase;
   text-align:left;
 }
 .card__ifpa {
