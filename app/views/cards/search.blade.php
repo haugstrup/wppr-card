@@ -9,15 +9,17 @@
 <table class="table table-striped table-condensed">
   <thead>
     <tr>
+      <th>IFPA&nbsp;#</th>
       <th>Name</th>
-      <th>Action</th>
+      <!-- <th>Rank</th> -->
     </tr>
   </thead>
   <tbody>
     @foreach($players as $player)
       <tr>
+        <td>{{{$player->player_id}}}</td>
         <td><a href="{{{ $player->link() }}}">{{{ $player->first_name }}} {{{ $player->last_name }}}</a></td>
-        <td><a href="#">Claim&nbsp;me!</a></td>
+        <!-- <td>{{{$player->info->wppr_rank}}}</td> -->
       </tr>
     @endforeach
   </tbody>

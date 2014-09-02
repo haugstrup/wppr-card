@@ -30,6 +30,12 @@ p.small {
 .search-form input {
   -webkit-appearance: none;
 }
+.claim-form {
+  margin:30px 0;
+}
+.claim-form button {
+  float:right;
+}
 
 .card {
   text-align: center;
@@ -78,20 +84,13 @@ p.small {
   font-size:0.8em;
   text-align:left;
 }
-.card__ifpa {
+.card__ifpa,
+.card__claim {
   display:block;
   margin:15px 0;
 }
 .card__player-link {
   color:inherit;
-}
-.card__banner {
-  display:block;
-  float:right;
-  color:#eee;
-  background:#3CB371;
-  border-radius:10px;
-  padding:2px 5px;
 }
 .card__banner:hover {
   text-decoration: none;

@@ -58,7 +58,7 @@ class CardController extends BaseController {
 
     // Format ordinals
     $info->player_stats->current_wppr_rank = $this->format_ordinal($info->player_stats->current_wppr_rank);
-    if ($info->championshipSeries) {
+    if (isset($info->championshipSeries)) {
       $info->championshipSeries[0]->rank = $this->format_ordinal($info->championshipSeries[0]->rank);
     }
 
@@ -98,7 +98,9 @@ class CardController extends BaseController {
     $players = array();
 
     foreach ($result->search as $raw) {
-      $players[] = new Player((array)$raw);
+      $player = new Player((array)$raw);
+      $player->info = $raw;
+      $players[] = $player;
     }
 
     if (count($players) === 1) {
@@ -106,6 +108,34 @@ class CardController extends BaseController {
     }
 
     return View::make('cards.search', array('players' => $players, 'query' => $query));
+  }
+
+  public function claim($id) {
+
+    $player = Player::find($id);
+
+    if (!$player) {
+      $info = $this->get_player_info($id);
+
+      if (!$info || !$info->player->player_id) {
+        return View::make('home.ifpaerror');
+      }
+
+      $raw = (array)$info->player;
+      $raw['player_id'] = (int)$raw['player_id'];
+      $player = new Player($raw);
+    }
+
+    return View::make('cards.claim', array('player' => $player));
+  }
+
+  public function check_claim($id) {
+
+    // Validate that url label is present
+    // Validate that email is correct
+    // Validate that url label doesn't already exists
+
+
   }
 
   public function get_player_info($id) {

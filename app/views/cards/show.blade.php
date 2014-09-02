@@ -20,7 +20,7 @@
       <div class="card__tile-title">ACTIVE EVENTS</div>
       <div class="card__tile-fact">{{{$info->player_stats->total_active_events}}}</div>
     </li>
-    @if ($info->championshipSeries)
+    @if (isset($info->championshipSeries))
     <li class="card__tile">
       <div class="card__tile-title">{{{strtoupper($info->championshipSeries[0]->group_name)}}}</div>
       <div class="card__tile-fact">{{$info->championshipSeries[0]->rank}}</div>
@@ -28,7 +28,9 @@
     @endif
   </ul>
   <a class="card__ifpa btn btn-default" href="http://ifpapinball.com/player.php?player_id={{{$player->player_id}}}" target="_blank">View official IFPA profile</a>
-  <!-- <a class="small card__banner" href="{{{URL::route('front')}}}">Get your wppr card</a> -->
+  @if (!$player->url_label && $info->player->ifpa_registered)
+  <a class="card__claim btn btn-default" href="{{{URL::route('claim', $player->player_id)}}}">Claim this wppr card</a>
+  @endif
   <a class="small card__player-link" href="{{{$player->link()}}}">{{{ $player->link() }}}</a>
 </div>
 
