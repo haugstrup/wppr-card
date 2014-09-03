@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'url' => 'http://ifpa.slapsave.com',
+	'url' => 'http://wppr.slapsave.com',
 
 	/*
 	|--------------------------------------------------------------------------
