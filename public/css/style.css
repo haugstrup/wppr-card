@@ -84,13 +84,14 @@ p.small {
   font-size:0.8em;
   text-align:left;
 }
-.card__ifpa,
-.card__claim {
+.card__button-full-width {
   display:block;
   margin:15px 0;
 }
 .card__player-link {
+  display:block;
   color:inherit;
+  margin:15px 0;
 }
 .card__banner:hover {
   text-decoration: none;

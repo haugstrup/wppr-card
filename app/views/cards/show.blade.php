@@ -27,11 +27,16 @@
     </li>
     @endif
   </ul>
-  <a class="card__ifpa btn btn-default" href="http://ifpapinball.com/player.php?player_id={{{$player->player_id}}}" target="_blank">View official IFPA profile</a>
-  @if (!$player->url_label && $info->player->ifpa_registered)
-  <a class="card__claim btn btn-default" href="{{{URL::route('claim', $player->player_id)}}}">Claim this wppr card</a>
-  @endif
+  <a class="card__button-full-width btn btn-default" href="http://ifpapinball.com/player.php?player_id={{{$player->player_id}}}" target="_blank">View official IFPA profile</a>
   <a class="small card__player-link" href="{{{$player->link()}}}">{{{ $player->link() }}}</a>
+  @if (false && !$player->url_label && $info->player->ifpa_registered)
+    <div class="btn-group btn-group-justified">
+      <a class="btn " href="{{{URL::route('claim', $player->player_id)}}}">Claim card</a>
+      <a class="btn " href="{{{URL::route('front')}}}">Front page</a>
+    </div>
+  @else
+    <a class="card__button-full-width btn" href="{{{URL::route('front')}}}">Back to front page</a>
+  @endif
 </div>
 
 @stop
