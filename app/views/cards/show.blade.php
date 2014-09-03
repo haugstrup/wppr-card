@@ -29,7 +29,7 @@
   </ul>
   <a class="card__button-full-width btn btn-default" href="http://ifpapinball.com/player.php?player_id={{{$player->player_id}}}" target="_blank">View official IFPA profile</a>
   <a class="small card__player-link" href="{{{$player->link()}}}">{{{ $player->link() }}}</a>
-  @if (false && !$player->url_label && $info->player->ifpa_registered)
+  @if (!$player->url_label && $info->player->ifpa_registered === 'Y')
     <div class="btn-group btn-group-justified">
       <a class="btn " href="{{{URL::route('claim', $player->player_id)}}}">Claim card</a>
       <a class="btn " href="{{{URL::route('front')}}}">Front page</a>

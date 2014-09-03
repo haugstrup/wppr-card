@@ -15,6 +15,7 @@ Route::get('/', array('uses' => 'HomeController@front', 'as' => 'front'));
 Route::get('/search', array('uses' => 'CardController@search', 'as' => 'search'));
 Route::get('/players', array('uses' => 'CardController@index', 'as' => 'all_cards'));
 Route::get('/p/{id}/claim', array('uses' => 'CardController@claim', 'as' => 'claim'));
-Route::post('/p/{id}/claim', array('uses' => 'CardController@check_claim', 'as' => 'check_claim'));
+Route::get('/claim', array('uses' => 'CardController@claim', 'as' => 'claim_bare'));
+Route::post('/claim', array('uses' => 'CardController@check_claim', 'as' => 'check_claim'));
 Route::get('/p/{id}', array('uses' => 'CardController@show', 'as' => 'show_by_id'));
 Route::get('/{label}', array('uses' => 'CardController@show', 'as' => 'show'));

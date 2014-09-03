@@ -12,6 +12,7 @@
     {{ Form::button('Search', array('class' => 'btn btn-info', 'type' => 'submit')) }}
   </span>
 </div>
+<div class="search-form__alternate small"><a href="{{{URL::route('claim_bare')}}}">or claim your card right away</a></div>
 {{ Form::close() }}
 
 <p class="small">Create your own mobile-friendly <a href="http://ifpapinball.com/">IFPA</a> calling cards by searching above. Add your calling card to your phone's home screen for easy access when a tournament director asks for your IFPA player number.</p>

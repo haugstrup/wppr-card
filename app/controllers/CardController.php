@@ -21,9 +21,11 @@ class CardController extends BaseController {
       // Create if we don't
       $raw = (array)$info->player;
       $raw['player_id'] = (int)$raw['player_id'];
-      $player = new Player($raw);
 
-      if ($info && !Player::find($player->player_id)) {
+      $player = Player::find($raw['player_id']);
+
+      if (!$player) {
+        $player = new Player($raw);
         $player->url_label = null;
         $player->save();
       }
@@ -75,24 +77,9 @@ class CardController extends BaseController {
       return Redirect::route('show_by_id', (int)($query));
     }
 
-    // Show search results
-    $key = 'search-'.$query;
-    if (Cache::has($key)) {
-      $result = Cache::get($key);
-    } else {
-      $ifpa = new IfpaApi($_ENV['IFPA_API_KEY']);
-      if (stristr($query, '@')) {
-        $result = $ifpa->searchPlayersByEmail($query);
-      } else {
-        $result = $ifpa->searchPlayersByName($query);
-      }
-
-      if (!$result) {
-        return View::make('home.ifpaerror');
-      }
-
-      // Store result in cache
-      Cache::put($key, $result, Carbon::now()->addMinutes(60));
+    $result = $this->search_for_player($query);
+    if (!$result) {
+      return View::make('home.ifpaerror');
     }
 
     $players = array();
@@ -110,32 +97,121 @@ class CardController extends BaseController {
     return View::make('cards.search', array('players' => $players, 'query' => $query));
   }
 
-  public function claim($id) {
+  public function claim($id = null) {
 
-    $player = Player::find($id);
+    if ($id) {
+      $player = Player::find($id);
 
-    if (!$player) {
-      $info = $this->get_player_info($id);
+      if (!$player) {
+        $info = $this->get_player_info($id);
 
-      if (!$info || !$info->player->player_id) {
-        return View::make('home.ifpaerror');
+        if (!$info || !$info->player->player_id) {
+          return View::make('home.ifpaerror');
+        }
+
+        $raw = (array)$info->player;
+        $raw['player_id'] = (int)$raw['player_id'];
+        $player = new Player($raw);
       }
-
-      $raw = (array)$info->player;
-      $raw['player_id'] = (int)$raw['player_id'];
-      $player = new Player($raw);
+    } else {
+      $player = null;
     }
 
     return View::make('cards.claim', array('player' => $player));
   }
 
-  public function check_claim($id) {
+  public function check_claim() {
 
-    // Validate that url label is present
-    // Validate that email is correct
-    // Validate that url label doesn't already exists
+    $label = Input::get('vanity_url');
+    $id = Input::get('player_id');
+    $email = Input::get('email');
+
+    $rules = array(
+      'email'    => 'required|email',
+      'vanity_url' => 'required|min:3|not_in:claim,search,p,players'
+    );
+
+    $validator = Validator::make(Input::all(), $rules);
+    $error_route = Redirect::route('claim_bare');
+    if ($id) {
+      $error_route = Redirect::route('claim', Input::get('player_id'));
+    }
 
 
+    if ($validator->fails()) {
+      return $error_route->withErrors($validator)->withInput();
+    }
+
+    // Test that url is not already spoken for
+    if (Player::where('url_label', '=', $label)->first()) {
+      return $error_route->with('error', 'Bummer, someone else already claimed that vanity URL.')->withInput();
+    }
+
+    // If ID passed: Get player from DB
+    $existing_player = null;
+    if ($id) {
+      $existing_player = Player::find($id);
+    }
+
+    // Get player by email
+    $result = $this->search_for_player($email);
+    if (!$result) {
+      return View::make('home.ifpaerror');
+    }
+
+    // Test that search result is there
+    if (count($result->search) === 0) {
+      return $error_route->with('error', 'Aww shucks, IFPA doesn\'t have a player registered with that email.')->withInput();
+    }
+
+    $api_player = array_shift($result->search);
+
+    // If ID passed: Make sure search result matches id provided
+    if ($existing_player) {
+      if ($existing_player->player_id !== (int)$api_player->player_id) {
+        return $error_route->with('error', 'The email you entered does not belong to the player you are trying to claim a card for.')->withInput();
+      }
+    }
+
+    // Test that player doesn't already have a URL label
+    $player = Player::find($api_player->player_id);
+
+    if ($player && $player->url_label) {
+      return $error_route->with('error', 'Player already has a vanity URL.')->withInput();
+    }
+
+    // Save url label on player
+    if ($player) {
+      $player->url_label = $label;
+      $player->save();
+    } else {
+      $raw = (array)$api_player;
+      $raw['player_id'] = (int)$raw['player_id'];
+      $player = new Player($raw);
+      $player->url_label = $label;
+      $player->save();
+    }
+
+    return Redirect::route('show', $player->url_label)->with('success', "Groovy, man. You've claimed your card.");
+  }
+
+  public function search_for_player($query) {
+    $key = 'search-'.$query;
+    if (Cache::has($key)) {
+      $result = Cache::get($key);
+    } else {
+      $ifpa = new IfpaApi($_ENV['IFPA_API_KEY']);
+      if (stristr($query, '@')) {
+        $result = $ifpa->searchPlayersByEmail($query);
+      } else {
+        $result = $ifpa->searchPlayersByName($query);
+      }
+
+      if ($result) {
+        Cache::put($key, $result, Carbon::now()->addHours(24));
+      }
+    }
+    return $result;
   }
 
   public function get_player_info($id) {
@@ -146,7 +222,7 @@ class CardController extends BaseController {
       $ifpa = new IfpaApi($_ENV['IFPA_API_KEY']);
       $result = $ifpa->getPlayerInformation($id);
       if ($result) {
-        Cache::put($key, $result, Carbon::now()->addMinutes(60));
+        Cache::put($key, $result, Carbon::now()->addHours(24));
       }
     }
     return $result;
