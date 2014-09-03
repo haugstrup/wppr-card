@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>WPPR Cards | @yield("title")</title>
-  <!-- <link rel="apple-touch-icon" href="/img/touch-icon.png"> -->
+  <link rel="apple-touch-icon" href="/img/touch-icon.png">
   <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
   <link rel="stylesheet" href="/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/style.css">
