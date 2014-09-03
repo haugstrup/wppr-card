@@ -35,7 +35,7 @@
       <a class="btn " href="{{{URL::route('front')}}}">Front page</a>
     </div>
   @else
-    <a class="card__button-full-width btn" href="{{{URL::route('front')}}}">Back to front page</a>
+    <a class="card__button-full-width btn btn-link" href="{{{URL::route('front')}}}">Back to front page</a>
   @endif
 </div>
 

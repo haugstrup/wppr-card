@@ -5,6 +5,12 @@ use Carbon\Carbon;
 
 class CardController extends BaseController {
 
+  public function index()
+  {
+    $players = Player::orderBy('first_name')->orderBy('last_name')->get();
+    return View::make('cards.index', array('players' => $players));
+  }
+
   public function show($id)
   {
 

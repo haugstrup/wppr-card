@@ -4,7 +4,7 @@
 @stop
 @section("content")
 @include('header')
-<p class="small">To claim your own WPPR Card, fill in the email address you registered with IFPA and your vanity URL below.</p>
+<p class="small">To claim your own WPPR Card, fill in the email address you registered with IFPA and your vanity URL below. If you haven't registered an email with IFPA, <a href="http://www.ifpapinball.com/user-profile">go do so right now</a>.</p>
 <p class="small">After claiming your card it will be available at {{{URL::route('front')}}}/<b>YourVanityURL</b></p>
 {{ Form::open(array('route' => array('check_claim'), 'method' => 'post', 'class' => 'claim-form')) }}
   <div class="form-group">
