@@ -6,7 +6,6 @@ vendor
 composer.phar
 .DS_Store
 .sass-cache
-app/storage
 
 node_modules
 
