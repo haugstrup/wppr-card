@@ -11,7 +11,7 @@
     {{ Form::email('email', null, array('class' => 'form-control', 'autocorrect' => 'off', 'autocapitalize' => 'off', 'placeholder' => 'Enter your IFPA email address')) }}
   </div>
   <div class="form-group">
-    {{ Form::text('vanity_url', null, array('class' => 'form-control', 'autocorrect' => 'off', 'autocapitalize' => 'off', 'placeholder' => 'Enter your vanity URL')) }}
+    {{ Form::text('vanity_url', null, array('class' => 'form-control', 'autocorrect' => 'off', 'autocapitalize' => 'off', 'placeholder' => 'Your vanity name - initials, nickname etc')) }}
   </div>
   {{ Form::hidden('player_id', $player ? $player->player_id : '') }}
   {{ Form::button('Claim wppr card', array('class' => 'btn btn-success', 'type' => 'submit')) }}
