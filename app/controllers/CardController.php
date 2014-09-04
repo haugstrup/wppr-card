@@ -134,7 +134,7 @@ class CardController extends BaseController {
 
     $rules = array(
       'email'    => 'required|email',
-      'vanity_url' => 'required|min:3|not_in:claim,search,p,players'
+      'vanity_url' => 'required|min:3|not_in:claim,search,p,players|alpha_dash'
     );
 
     $validator = Validator::make(Input::all(), $rules);
