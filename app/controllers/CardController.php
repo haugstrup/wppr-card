@@ -76,6 +76,15 @@ class CardController extends BaseController {
   public function search()
   {
 
+    $rules = array(
+      'query'    => 'required'
+    );
+
+    $validator = Validator::make(Input::all(), $rules);
+    if ($validator->fails()) {
+      return Redirect::route('front')->withErrors($validator)->withInput();
+    }
+
     $query = Input::get('query');
 
     // Send player ids directly to permalink
