@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "24fb4441a38a266a44aceff1da3e57e6",
+    "hash": "8aca298ccd7fee274638c86b8fd84a7f",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -198,16 +198,16 @@
         },
         {
             "name": "heyrocker/ifpaapi",
-            "version": "dev-master",
+            "version": "dev-curl",
             "source": {
                 "type": "git",
-                "url": "https://github.com/heyrocker/IfpaApi.git",
-                "reference": "9684c9d9e47c7b5447332fe5bc7e44d739cba2e9"
+                "url": "https://github.com/haugstrup/IfpaApi.git",
+                "reference": "c27bcb658da431a930e592d34b3d203bcce64df1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/heyrocker/IfpaApi/zipball/9684c9d9e47c7b5447332fe5bc7e44d739cba2e9",
-                "reference": "9684c9d9e47c7b5447332fe5bc7e44d739cba2e9",
+                "url": "https://api.github.com/repos/haugstrup/IfpaApi/zipball/c27bcb658da431a930e592d34b3d203bcce64df1",
+                "reference": "c27bcb658da431a930e592d34b3d203bcce64df1",
                 "shasum": ""
             },
             "require": {
@@ -219,7 +219,6 @@
                     "lib/IfpaApi.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Unlicense"
             ],
@@ -236,7 +235,11 @@
             "keywords": [
                 "pinball"
             ],
-            "time": "2014-08-24 17:59:37"
+            "support": {
+                "forum": "https://github.com/heyrocker/IfpaApi",
+                "source": "https://github.com/haugstrup/IfpaApi/tree/curl"
+            },
+            "time": "2014-09-05 04:39:08"
         },
         {
             "name": "ircmaxell/password-compat",

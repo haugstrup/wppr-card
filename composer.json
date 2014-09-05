@@ -3,10 +3,16 @@
 	"description": "The Laravel Framework.",
 	"keywords": ["framework", "laravel"],
 	"license": "MIT",
+	"repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/haugstrup/ifpaapi"
+    }
+  ],
 	"require": {
 		"laravel/framework": "4.2.*",
 		"barryvdh/laravel-debugbar": "1.*",
-		"heyrocker/ifpaapi": "dev-master"
+		"heyrocker/ifpaapi": "dev-curl"
 	},
 	"autoload": {
 		"classmap": [
