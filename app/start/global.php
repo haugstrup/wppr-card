@@ -112,4 +112,9 @@ App::down(function()
 |
 */
 
+App::missing(function($exception)
+{
+  return Response::view('home.notfound', array(), 404);
+});
+
 require app_path().'/filters.php';
