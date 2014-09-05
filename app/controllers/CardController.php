@@ -211,21 +211,20 @@ class CardController extends BaseController {
   }
 
   public function search_for_player($query) {
-    $key = 'search-'.$query;
-    if (Cache::has($key)) {
-      $result = Cache::get($key);
-    } else {
+    // $key = 'search-'.$query;
+    // if (Cache::has($key)) {
+    //   $result = Cache::get($key);
+    // } else {
       $ifpa = new IfpaApi($_ENV['IFPA_API_KEY']);
       if (stristr($query, '@')) {
         $result = $ifpa->searchPlayersByEmail($query);
       } else {
         $result = $ifpa->searchPlayersByName($query);
       }
-
-      if ($result) {
-        Cache::put($key, $result, Carbon::now()->addHours(24));
-      }
-    }
+    //   if ($result) {
+    //     Cache::put($key, $result, Carbon::now()->addHours(24));
+    //   }
+    // }
     return $result;
   }
 
