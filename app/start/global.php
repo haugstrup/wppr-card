@@ -60,11 +60,17 @@ App::error(function(Exception $exception, $code)
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
+    $query = Request::query();
     $payload = json_encode(array(
       "message" => $exception->getMessage(),
       "stacktrace" => array("trace" => $exception->getTraceAsString()),
       "culprit" => $trace[0]['class']."@".$trace[0]['function'],
-
+      "http" => array(
+        "method" => Request::method(),
+        "url" => Request::url(),
+        "query_string" => $query ? $query["query"] : '',
+        "data" => Request::isMethod('post') ? Input::all() : new stdClass(),
+      ),
     ));
 
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
